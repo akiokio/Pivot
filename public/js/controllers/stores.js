@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pivotapp.stores').controller('StoresController', ['$scope', '$stateParams', '$location', 'Global', 'Stores', function ($scope, $stateParams, $location, Global, Stores) {
+angular.module('pivotapp.stores').controller('StoresController', ['$scope', '$stateParams', '$location', 'Global', 'Stores', 'Products', function ($scope, $stateParams, $location, Global, Stores, Products) {
     $scope.global = Global;
 
     $scope.create = function() {
@@ -55,6 +55,14 @@ angular.module('pivotapp.stores').controller('StoresController', ['$scope', '$st
             storeId: $stateParams.storeId
         }, function(store) {
             $scope.store = store;
+        });
+    };
+
+    $scope.findStoreProducts = function(){
+        Products.query({
+            store: $stateParams.storeId
+        }, function(products) {
+            $scope.products = products;
         });
     };
 }]);

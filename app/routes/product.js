@@ -14,7 +14,7 @@ var hasAuthorization = function(req, res, next) {
 
 module.exports = function(app) {
 
-    app.get('/products', products.all);
+    app.get('/products', products.list);
     app.post('/products', authorization.requiresLogin, products.create);
     app.get('/products/:productId', products.show);
     app.put('/products/:productId', authorization.requiresLogin, hasAuthorization, products.update);

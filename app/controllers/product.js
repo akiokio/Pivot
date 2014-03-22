@@ -24,11 +24,15 @@ exports.product = function(req, res, next, id) {
  * Create an product
  */
 exports.create = function(req, res) {
+    req.body.categories = JSON.parse(req.body.categories);
+    req.body.shipping = JSON.parse(req.body.shipping);
+
     var product = new Product(req.body);
     product.user = req.user;
 
     product.save(function(err) {
         if (err) {
+            console.log(err);
             return res.send('users/signup', {
                 errors: err.errors,
                 product: product
@@ -87,8 +91,9 @@ exports.show = function(req, res) {
 /**
  * List of product
  */
-exports.all = function(req, res) {
-    Product.find().sort('-created').populate('user', 'name username').exec(function(err, products) {
+exports.list = function(req, res) {
+    req.query.user = req.user;
+    Product.find(req.query).sort('-created').populate('user', 'name username').exec(function(err, products) {
         if (err) {
             res.render('error', {
                 status: 500

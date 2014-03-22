@@ -87,8 +87,9 @@ exports.show = function(req, res) {
 /**
  * List of store
  */
-exports.all = function(req, res) {
-    Store.find().sort('-created').populate('user', 'name username').exec(function(err, stores) {
+exports.list = function(req, res) {
+    req.query.user = req.user;
+    Store.find(req.query).sort('-created').populate('user', 'name username').exec(function(err, stores) {
         if (err) {
             res.render('error', {
                 status: 500

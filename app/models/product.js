@@ -6,11 +6,38 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
+/**
+ * Shipping Schema
+ */
+var Shipping = new Schema({
+    weight: {
+        type: Number
+    },
+    width: {
+        type: Number
+    },
+    height: {
+        type: Number
+    },
+    depth: {
+        type: Number
+    },
+}, { _id: false });
+
+var Categories = new Schema({
+    name: String
+}, { _id: false });
+
 
 /**
  * Product Schema
  */
 var ProductSchema = new Schema({
+    _id: String,
+    sku: {
+        type: Number,
+        required: true,
+    },
     created: {
         type: Date,
         default: Date.now
@@ -25,6 +52,21 @@ var ProductSchema = new Schema({
         default: '',
         trim: true
     },
+    type: {
+        type: String,
+        default: '',
+        trim: true
+    },
+    cost: Number,
+    price: Number,
+    brand: {
+        type: String,
+        trim: true
+    },
+    status: Boolean,
+    quantity: Number,
+    categories: [Categories],
+    shipping: [Shipping],
     store: {
         type: Schema.ObjectId,
         ref: 'Store'

@@ -1,0 +1,10 @@
+<section data-ng-controller="ProductsController" data-ng-init="find()">
+  <ul class="stores unstyled">
+    <li data-ng-repeat="product in products">
+      <span>{{product.created | date:'medium'}}</span> /
+      <span>{{product.user.name}}</span>
+      <h2><a data-ng-href="#!/stores/{{store._id}}">{{product.name}}</a></h2>
+    </li>
+  </ul>
+  <h1 data-ng-hide="!products || products.length">No product yet. <br> Why don't you <a href="/#!/products/create">Create One</a>?</h1>
+</section>
