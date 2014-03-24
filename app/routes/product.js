@@ -11,6 +11,11 @@ var hasAuthorization = function(req, res, next) {
     }
     next();
 };
+//User Belongs to store
+var belongsToSameStore = function(req, res, next){
+    // console.log(req, res, next);
+    next();
+};
 
 module.exports = function(app) {
 
@@ -19,6 +24,9 @@ module.exports = function(app) {
     app.get('/products/:productId', products.show);
     app.put('/products/:productId', authorization.requiresLogin, hasAuthorization, products.update);
     app.del('/products/:productId', authorization.requiresLogin, hasAuthorization, products.destroy);
+
+    app.get('/brands', products.listBrands);
+    app.post('/brands', authorization.requiresLogin, belongsToSameStore, products.createBrand);
 
     // Finish with setting up the articleId param
     app.param('productId', products.product);

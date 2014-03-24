@@ -1,20 +1,20 @@
 'use strict';
 
-angular.module('pivotapp.products').controller('ProductsController', ['$scope', '$stateParams', '$location', 'Global', 'Products', function ($scope, $stateParams, $location, Global, Products) {
+angular.module('pivotapp.products').controller('ProductsController', ['$scope', '$stateParams', '$location', 'Global', 'Products', 'Brands', function ($scope, $stateParams, $location, Global, Products, Brands) {
     $scope.global = Global;
 
     $scope.create = function() {
         var product = new Products({
+            store: $stateParams.storeId,
 			sku: this.sku,
             name: this.name,
             description: this.description
         });
         product.$save(function(response) {
-            $location.path('product/' + response._id);
+            $location.path($stateParams.storeId + '/products/' + response._id);
         });
 
         this.name = '';
-        this.url = '';
     };
 
     $scope.remove = function(product) {
@@ -56,7 +56,15 @@ angular.module('pivotapp.products').controller('ProductsController', ['$scope', 
             productId: $stateParams.productId
         }, function(product) {
             $scope.product = product;
-            console.log(product);
+            // console.log(product);
+            $scope.findBrands();
+        });
+    };
+
+    $scope.findBrands = function() {
+        Brands.query({store: $scope.product.store}, function(brands){
+            $scope.brands = brands;
+            console.log($scope.brands);
         });
     };
 

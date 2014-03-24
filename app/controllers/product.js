@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Product = mongoose.model('Product'),
+    Brand = mongoose.model('Brand'),
     _ = require('lodash');
 
 
@@ -24,8 +25,12 @@ exports.product = function(req, res, next, id) {
  * Create an product
  */
 exports.create = function(req, res) {
-    req.body.categories = JSON.parse(req.body.categories);
-    req.body.shipping = JSON.parse(req.body.shipping);
+    if (req.body.categories) {
+        req.body.categories = JSON.parse(req.body.categories);
+    }
+    if(req.body.shipping){
+        req.body.shipping = JSON.parse(req.body.shipping);
+    }
 
     var product = new Product(req.body);
     product.user = req.user;
@@ -100,6 +105,43 @@ exports.list = function(req, res) {
             });
         } else {
             res.jsonp(products);
+        }
+    });
+};
+
+/**
+ * List of brands
+ */
+exports.listBrands = function(req, res) {
+    Brand.find(req.query).sort('-created').exec(function(err, brands) {
+        if (err) {
+            console.log(err);
+            res.render('error', {
+                status: 500,
+                brand: brands,
+            });
+        } else {
+            res.jsonp(brands);
+        }
+    });
+};
+
+/**
+ * Create an brand
+ */
+exports.createBrand = function(req, res) {
+
+    var brand = new Brand(req.body);
+
+    brand.save(function(err) {
+        if (err) {
+            console.log(err);
+            return res.send('users/signup', {
+                errors: err.errors,
+                product: brand
+            });
+        } else {
+            res.jsonp(brand);
         }
     });
 };

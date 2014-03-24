@@ -10,4 +10,14 @@ angular.module('pivotapp.products')
             method: 'PUT'
         }
     });
-}]);
+}])
+.factory('Brands', ['$resource', function($resource) {
+    return $resource('brands/:brandId', {
+        brandId: '@_id',
+    }, {
+        update: {
+            method: 'PUT'
+        }
+    });
+}])
+;

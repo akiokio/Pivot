@@ -15,8 +15,12 @@ var Brand = new Schema({
         type: String,
         default: '',
         trim: true
-    }
-}, { _id: false });
+    },
+    store: {
+        type: Schema.ObjectId,
+        ref: 'Store'
+    },
+});
 
 var Picture = new Schema({
     img: { data: Buffer, contentType: String }
@@ -26,7 +30,6 @@ var Picture = new Schema({
  * Product Schema
  */
 var ProductSchema = new Schema({
-    _id: String,
     sku: {
         type: Number,
         required: true,
@@ -96,3 +99,4 @@ ProductSchema.statics.load = function(id, cb) {
 };
 
 mongoose.model('Product', ProductSchema);
+mongoose.model('Brand', Brand);

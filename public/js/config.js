@@ -43,19 +43,19 @@ angular.module('pivotapp').config(['$stateProvider', '$urlRouterProvider',
     })
     // Product crud
       .state('all products', {
-        url: '/products',
+        url: '/:storeId//products',
         templateUrl: 'views/products/list.html'
     })
       .state('create products', {
-        url: '/products/create',
+        url: '/:storeId/products/create',
         templateUrl: 'views/products/create.html'
     })
       .state('edit products', {
-        url: '/products/:productId/edit',
+        url: '/:storeId/products/:productId/edit',
         templateUrl: 'views/products/edit.html'
     })
       .state('products by id', {
-        url: '/products/:productId',
+        url: '/:storeId/products/:productId',
         templateUrl: 'views/products/view.html'
     })
       .state('home', {
