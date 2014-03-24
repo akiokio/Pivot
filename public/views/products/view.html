@@ -1,7 +1,22 @@
 <section data-ng-controller="ProductsController" data-ng-init="findOne()">
     <span>{{product.created | date:'medium'}}</span> /
     <span>{{product.user.username}}</span>
-    <h2>{{product.name}}</h2>
+    <h2>{{product.sku}} - {{product.name}}</h2>
+    <p>Brand: <span data-ng-repeat="brand in product.brand">{{brand.name}}</span></p>
+    <p>Description: {{product.description}}</p>
+    <p>
+        Categories: <ul><li data-ng-repeat="category in product.categories">{{category.name}}</li></ul>
+    </p>
+    <p>Weight: {{shipping.weight}}</p>
+    <p>Width: {{shipping.width}}</p>
+    <p>Height: {{shipping.height}}</p>
+    <p>Depth: {{shipping.depth}}</p>
+    <p>Cost: {{product.cost}}</p>
+    <p>Price: {{product.price}}</p>
+    <p>Status: {{product.status}}</p>
+    <p>Quantity: {{product.quantity}}</p>
+    <p>Type: {{product.type}}</p>
+    <p>Picture: {{product.gallery}} #TODO</p>
     <div data-ng-show="global.user._id == product.user._id">
         <a class="btn" href="/#!/products/{{product._id}}/edit">
           <i class="glyphicon glyphicon-edit"></i>
